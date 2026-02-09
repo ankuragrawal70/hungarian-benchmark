@@ -108,7 +108,7 @@ def print_scenario_comparison(scenario_name, results):
     if sequential_results:
         print(f"\n{Fore.CYAN}📊 SEQUENTIAL (1 Core){Style.RESET_ALL}\n")
         sequential_results = calculate_speedup(sequential_results)
-        sequential_results.sort(key=lambda x: x.get('execution_time_ms', float('inf')))
+        sequential_results.sort(key=lambda x: x.get('total_time_ms', float('inf')))
         
         table_data = []
         for result in sequential_results:
@@ -133,14 +133,23 @@ def print_scenario_comparison(scenario_name, results):
         
         successful = [r for r in sequential_results if r.get('success')]
         if successful:
-            winner = successful[0]
-            print(f"\n{Fore.GREEN}🏆 Fastest (Sequential): {winner['language']}{Style.RESET_ALL}")
+            # Find different winners
+            matrix_winner = min(successful, key=lambda x: x.get('load_time_ms', float('inf')))
+            algo_winner = min(successful, key=lambda x: x.get('execution_time_ms', float('inf')))
+            total_winner = min(successful, key=lambda x: x.get('total_time_ms', float('inf')))
+            memory_winner = min(successful, key=lambda x: x.get('memory_used_mb', float('inf')))
+            
+            print(f"\n{Fore.GREEN}🏆 Winners (Sequential):{Style.RESET_ALL}")
+            print(f"  📊 Matrix Gen: {matrix_winner['language']} ({matrix_winner.get('load_time_ms', 0):.3f}ms)")
+            print(f"  ⚡ Algorithm: {algo_winner['language']} ({algo_winner.get('execution_time_ms', 0):.3f}ms)")
+            print(f"  🎯 Total Time: {total_winner['language']} ({total_winner.get('total_time_ms', 0):.3f}ms)")
+            print(f"  💾 Memory: {memory_winner['language']} ({memory_winner.get('memory_used_mb', 0):.2f}MB)")
     
     # Print Parallel Results
     if parallel_results:
         print(f"\n{Fore.CYAN}📊 PARALLEL (8 Cores){Style.RESET_ALL}\n")
         parallel_results = calculate_speedup(parallel_results)
-        parallel_results.sort(key=lambda x: x.get('execution_time_ms', float('inf')))
+        parallel_results.sort(key=lambda x: x.get('total_time_ms', float('inf')))
         
         table_data = []
         for result in parallel_results:
@@ -165,8 +174,17 @@ def print_scenario_comparison(scenario_name, results):
         
         successful = [r for r in parallel_results if r.get('success')]
         if successful:
-            winner = successful[0]
-            print(f"\n{Fore.GREEN}🏆 Fastest (Parallel): {winner['language']}{Style.RESET_ALL}")
+            # Find different winners
+            matrix_winner = min(successful, key=lambda x: x.get('load_time_ms', float('inf')))
+            algo_winner = min(successful, key=lambda x: x.get('execution_time_ms', float('inf')))
+            total_winner = min(successful, key=lambda x: x.get('total_time_ms', float('inf')))
+            memory_winner = min(successful, key=lambda x: x.get('memory_used_mb', float('inf')))
+            
+            print(f"\n{Fore.GREEN}🏆 Winners (Parallel):{Style.RESET_ALL}")
+            print(f"  📊 Matrix Gen: {matrix_winner['language']} ({matrix_winner.get('load_time_ms', 0):.3f}ms)")
+            print(f"  ⚡ Algorithm: {algo_winner['language']} ({algo_winner.get('execution_time_ms', 0):.3f}ms)")
+            print(f"  🎯 Total Time: {total_winner['language']} ({total_winner.get('total_time_ms', 0):.3f}ms)")
+            print(f"  💾 Memory: {memory_winner['language']} ({memory_winner.get('memory_used_mb', 0):.2f}MB)")
 
 
 def generate_markdown_report(scenarios, output_file="/results/comparison_report.md"):
@@ -191,7 +209,7 @@ def generate_markdown_report(scenarios, output_file="/results/comparison_report.
             if sequential_results:
                 f.write("### Sequential (1 Core)\n\n")
                 sequential_results = calculate_speedup(sequential_results)
-                sequential_results.sort(key=lambda x: x.get('execution_time_ms', float('inf')))
+                sequential_results.sort(key=lambda x: x.get('total_time_ms', float('inf')))
                 
                 f.write("| Language | Implementation | Matrix | Matrix Gen (ms) | Algo (ms) | Total (ms) | Memory (MB) | Matrix Gen Speedup | Algo Speedup | Cost |\n")
                 f.write("|----------|----------------|--------|-----------------|-----------|------------|-------------|---------------------|--------------|------|\n")
@@ -221,7 +239,7 @@ def generate_markdown_report(scenarios, output_file="/results/comparison_report.
             if parallel_results:
                 f.write("### Parallel (8 Cores)\n\n")
                 parallel_results = calculate_speedup(parallel_results)
-                parallel_results.sort(key=lambda x: x.get('execution_time_ms', float('inf')))
+                parallel_results.sort(key=lambda x: x.get('total_time_ms', float('inf')))
                 
                 f.write("| Language | Implementation | Matrix | Matrix Gen (ms) | Algo (ms) | Total (ms) | Memory (MB) | Matrix Gen Speedup | Algo Speedup | Cost |\n")
                 f.write("|----------|----------------|--------|-----------------|-----------|------------|-------------|---------------------|--------------|------|\n")
@@ -244,14 +262,16 @@ def generate_markdown_report(scenarios, output_file="/results/comparison_report.
                 
                 successful = [r for r in parallel_results if r.get('success')]
                 if successful:
-                    winner = successful[0]
-                    f.write(f"\n**Fastest (Parallel):** {winner['language']}\n\n")
-            if successful:
-                winner = successful[0]
-                f.write(f"\n**Fastest Algorithm:** {winner['language']}")
-                if winner.get('algo_speedup', 0) > 1:
-                    f.write(f" ({winner['algo_speedup']:.2f}x faster than Python)")
-                f.write("\n")
+                    matrix_winner = min(successful, key=lambda x: x.get('load_time_ms', float('inf')))
+                    algo_winner = min(successful, key=lambda x: x.get('execution_time_ms', float('inf')))
+                    total_winner = min(successful, key=lambda x: x.get('total_time_ms', float('inf')))
+                    memory_winner = min(successful, key=lambda x: x.get('memory_used_mb', float('inf')))
+                    
+                    f.write(f"\n**🏆 Winners (Parallel):**\n")
+                    f.write(f"- 📊 Matrix Gen: {matrix_winner['language']} ({matrix_winner.get('load_time_ms', 0):.3f}ms)\n")
+                    f.write(f"- ⚡ Algorithm: {algo_winner['language']} ({algo_winner.get('execution_time_ms', 0):.3f}ms)\n")
+                    f.write(f"- 🎯 Total Time: {total_winner['language']} ({total_winner.get('total_time_ms', 0):.3f}ms)\n")
+                    f.write(f"- 💾 Memory: {memory_winner['language']} ({memory_winner.get('memory_used_mb', 0):.2f}MB)\n\n")
     
     print(f"\n📄 Markdown report saved to: {output_file}")
 
@@ -384,7 +404,7 @@ def generate_html_report(scenarios, output_file="/results/comparison_report.html
             # Sequential table
             if sequential_results:
                 sequential_results = calculate_speedup(sequential_results)
-                sequential_results.sort(key=lambda x: x.get('execution_time_ms', float('inf')))
+                sequential_results.sort(key=lambda x: x.get('total_time_ms', float('inf')))
                 
                 f.write("        <h3>Sequential (1 Core)</h3>\n")
                 f.write("        <table>\n")
@@ -444,17 +464,23 @@ def generate_html_report(scenarios, output_file="/results/comparison_report.html
                 
                 successful = [r for r in sequential_results if r.get('success')]
                 if successful:
-                    winner = successful[0]
+                    matrix_winner = min(successful, key=lambda x: x.get('load_time_ms', float('inf')))
+                    algo_winner = min(successful, key=lambda x: x.get('execution_time_ms', float('inf')))
+                    total_winner = min(successful, key=lambda x: x.get('total_time_ms', float('inf')))
+                    memory_winner = min(successful, key=lambda x: x.get('memory_used_mb', float('inf')))
+                    
                     f.write("        <div class='winner'>\n")
-                    f.write(f"            <strong>🏆 Fastest (Sequential):</strong> {winner['language']}")
-                    if winner.get('algo_speedup', 0) > 1:
-                        f.write(f" ({winner['algo_speedup']:.2f}x faster than Python)")
-                    f.write("\n        </div>\n")
+                    f.write(f"            <strong>🏆 Winners (Sequential):</strong><br>\n")
+                    f.write(f"            📊 Matrix Gen: {matrix_winner['language']} ({matrix_winner.get('load_time_ms', 0):.3f}ms)<br>\n")
+                    f.write(f"            ⚡ Algorithm: {algo_winner['language']} ({algo_winner.get('execution_time_ms', 0):.3f}ms)<br>\n")
+                    f.write(f"            🎯 Total Time: {total_winner['language']} ({total_winner.get('total_time_ms', 0):.3f}ms)<br>\n")
+                    f.write(f"            💾 Memory: {memory_winner['language']} ({memory_winner.get('memory_used_mb', 0):.2f}MB)\n")
+                    f.write("        </div>\n")
             
             # Parallel table
             if parallel_results:
                 parallel_results = calculate_speedup(parallel_results)
-                parallel_results.sort(key=lambda x: x.get('execution_time_ms', float('inf')))
+                parallel_results.sort(key=lambda x: x.get('total_time_ms', float('inf')))
                 
                 f.write("        <h3>Parallel (8 Cores)</h3>\n")
                 f.write("        <table>\n")
@@ -514,12 +540,18 @@ def generate_html_report(scenarios, output_file="/results/comparison_report.html
                 
                 successful = [r for r in parallel_results if r.get('success')]
                 if successful:
-                    winner = successful[0]
+                    matrix_winner = min(successful, key=lambda x: x.get('load_time_ms', float('inf')))
+                    algo_winner = min(successful, key=lambda x: x.get('execution_time_ms', float('inf')))
+                    total_winner = min(successful, key=lambda x: x.get('total_time_ms', float('inf')))
+                    memory_winner = min(successful, key=lambda x: x.get('memory_used_mb', float('inf')))
+                    
                     f.write("        <div class='winner'>\n")
-                    f.write(f"            <strong>🏆 Fastest (Parallel):</strong> {winner['language']}")
-                    if winner.get('algo_speedup', 0) > 1:
-                        f.write(f" ({winner['algo_speedup']:.2f}x faster than Python)")
-                    f.write("\n        </div>\n")
+                    f.write(f"            <strong>🏆 Winners (Parallel):</strong><br>\n")
+                    f.write(f"            📊 Matrix Gen: {matrix_winner['language']} ({matrix_winner.get('load_time_ms', 0):.3f}ms)<br>\n")
+                    f.write(f"            ⚡ Algorithm: {algo_winner['language']} ({algo_winner.get('execution_time_ms', 0):.3f}ms)<br>\n")
+                    f.write(f"            🎯 Total Time: {total_winner['language']} ({total_winner.get('total_time_ms', 0):.3f}ms)<br>\n")
+                    f.write(f"            💾 Memory: {memory_winner['language']} ({memory_winner.get('memory_used_mb', 0):.2f}MB)\n")
+                    f.write("        </div>\n")
             
             f.write("    </div>\n")
         
@@ -553,7 +585,7 @@ def generate_confluence_report(scenarios, output_file="/results/comparison_repor
             # Sequential table
             if sequential_results:
                 sequential_results = calculate_speedup(sequential_results)
-                sequential_results.sort(key=lambda x: x.get('execution_time_ms', float('inf')))
+                sequential_results.sort(key=lambda x: x.get('total_time_ms', float('inf')))
                 
                 f.write("h3. Sequential (1 Core)\n\n")
                 f.write("|| Language || Implementation || Matrix || Matrix Gen (ms) || Algo (ms) || Total (ms) || Memory (MB) || Matrix Gen Speedup || Algo Speedup || Cost ||\n")
@@ -589,17 +621,22 @@ def generate_confluence_report(scenarios, output_file="/results/comparison_repor
                 
                 successful = [r for r in sequential_results if r.get('success')]
                 if successful:
-                    winner = successful[0]
-                    f.write("\n{info:title=Winner (Sequential)}\n")
-                    f.write(f"*Fastest:* {winner['language']}")
-                    if winner.get('algo_speedup', 0) > 1:
-                        f.write(f" ({winner['algo_speedup']:.2f}x faster than Python)")
-                    f.write("\n{info}\n\n")
+                    matrix_winner = min(successful, key=lambda x: x.get('load_time_ms', float('inf')))
+                    algo_winner = min(successful, key=lambda x: x.get('execution_time_ms', float('inf')))
+                    total_winner = min(successful, key=lambda x: x.get('total_time_ms', float('inf')))
+                    memory_winner = min(successful, key=lambda x: x.get('memory_used_mb', float('inf')))
+                    
+                    f.write("\n{info:title=Winners (Sequential)}\n")
+                    f.write(f"* *Matrix Gen:* {matrix_winner['language']} ({matrix_winner.get('load_time_ms', 0):.3f}ms)\n")
+                    f.write(f"* *Algorithm:* {algo_winner['language']} ({algo_winner.get('execution_time_ms', 0):.3f}ms)\n")
+                    f.write(f"* *Total Time:* {total_winner['language']} ({total_winner.get('total_time_ms', 0):.3f}ms)\n")
+                    f.write(f"* *Memory:* {memory_winner['language']} ({memory_winner.get('memory_used_mb', 0):.2f}MB)\n")
+                    f.write("{info}\n\n")
             
             # Parallel table
             if parallel_results:
                 parallel_results = calculate_speedup(parallel_results)
-                parallel_results.sort(key=lambda x: x.get('execution_time_ms', float('inf')))
+                parallel_results.sort(key=lambda x: x.get('total_time_ms', float('inf')))
                 
                 f.write("h3. Parallel (8 Cores)\n\n")
                 f.write("|| Language || Implementation || Matrix || Matrix Gen (ms) || Algo (ms) || Total (ms) || Memory (MB) || Matrix Gen Speedup || Algo Speedup || Cost ||\n")
@@ -635,12 +672,17 @@ def generate_confluence_report(scenarios, output_file="/results/comparison_repor
                 
                 successful = [r for r in parallel_results if r.get('success')]
                 if successful:
-                    winner = successful[0]
-                    f.write("\n{info:title=Winner (Parallel)}\n")
-                    f.write(f"*Fastest:* {winner['language']}")
-                    if winner.get('algo_speedup', 0) > 1:
-                        f.write(f" ({winner['algo_speedup']:.2f}x faster than Python)")
-                    f.write("\n{info}\n\n")
+                    matrix_winner = min(successful, key=lambda x: x.get('load_time_ms', float('inf')))
+                    algo_winner = min(successful, key=lambda x: x.get('execution_time_ms', float('inf')))
+                    total_winner = min(successful, key=lambda x: x.get('total_time_ms', float('inf')))
+                    memory_winner = min(successful, key=lambda x: x.get('memory_used_mb', float('inf')))
+                    
+                    f.write("\n{info:title=Winners (Parallel)}\n")
+                    f.write(f"* *Matrix Gen:* {matrix_winner['language']} ({matrix_winner.get('load_time_ms', 0):.3f}ms)\n")
+                    f.write(f"* *Algorithm:* {algo_winner['language']} ({algo_winner.get('execution_time_ms', 0):.3f}ms)\n")
+                    f.write(f"* *Total Time:* {total_winner['language']} ({total_winner.get('total_time_ms', 0):.3f}ms)\n")
+                    f.write(f"* *Memory:* {memory_winner['language']} ({memory_winner.get('memory_used_mb', 0):.2f}MB)\n")
+                    f.write("{info}\n\n")
     
     print(f"📄 Confluence report saved to: {output_file}")
 

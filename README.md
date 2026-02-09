@@ -8,8 +8,6 @@ This project benchmarks the Hungarian algorithm performance across:
 - **Python** (scipy.optimize.linear_sum_assignment)
 - **Golang** (munkres-go library)
 - **Rust** (pathfinding::kuhn_munkres)
-- **Java** (Hungarian Algorithm implementation) - Coming soon
-- **JavaScript/Node.js** (munkres-js library) - Coming soon
 
 ## Use Case
 
