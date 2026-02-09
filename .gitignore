@@ -1,0 +1,11 @@
+# Hungarian Benchmark
+testdata/
+results/
+*.pyc
+__pycache__/
+.DS_Store
+*.swp
+*.swo
+*~
+.vscode/
+.idea/

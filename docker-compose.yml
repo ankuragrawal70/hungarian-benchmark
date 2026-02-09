@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  # Python benchmark using scipy
+  python:
+    build:
+      context: ./python
+      dockerfile: Dockerfile
+    container_name: hungarian-python
+    volumes:
+      - ./results:/results
+    networks:
+      - benchmark-net
+
+  # Golang benchmark
+  golang:
+    build:
+      context: ./golang
+      dockerfile: Dockerfile
+    container_name: hungarian-golang
+    volumes:
+      - ./results:/results
+    networks:
+      - benchmark-net
+
+  # Rust benchmark
+  rust:
+    build:
+      context: ./rust
+      dockerfile: Dockerfile
+    container_name: hungarian-rust
+    volumes:
+      - ./results:/results
+    networks:
+      - benchmark-net
+
+  # Comparison reporter
+  reporter:
+    build:
+      context: ./runner
+      dockerfile: Dockerfile
+    container_name: hungarian-reporter
+    volumes:
+      - ./results:/results
+    depends_on:
+      - python
+      - golang
+      - rust
+    command: python compare_results.py
+    networks:
+      - benchmark-net
+
+networks:
+  benchmark-net:
+    driver: bridge

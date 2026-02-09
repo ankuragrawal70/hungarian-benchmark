@@ -1,0 +1,1553 @@
+╔═══════════════════════════════════════════════════════════════╗
+║   Hungarian Algorithm Performance Benchmark                   ║
+╚═══════════════════════════════════════════════════════════════╝
+
+🧹 Cleaning previous results...
+
+🏗️  Building Docker images...
+time="2026-02-08T11:04:38+05:30" level=warning msg="/Users/ankur.a/g_orange/hungarian-benchmark/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+ Image hungarian-benchmark-golang Building 
+ Image hungarian-benchmark-rust Building 
+ Image hungarian-benchmark-reporter Building 
+ Image hungarian-benchmark-python Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 2.04kB done
+#1 DONE 0.0s
+
+#2 [reporter internal] load build definition from Dockerfile
+#2 transferring dockerfile: 448B done
+#2 DONE 0.0s
+
+#3 [rust internal] load build definition from Dockerfile
+#3 transferring dockerfile: 612B done
+#3 DONE 0.0s
+
+#4 [golang internal] load build definition from Dockerfile
+#4 transferring dockerfile: 489B done
+#4 DONE 0.0s
+
+#5 [python internal] load build definition from Dockerfile
+#5 transferring dockerfile: 435B done
+#5 DONE 0.0s
+
+#6 [golang internal] load metadata for docker.io/library/golang:1.21-alpine
+#6 DONE 0.0s
+
+#7 [golang internal] load metadata for docker.io/library/alpine:latest
+#7 DONE 0.0s
+
+#8 [golang internal] load .dockerignore
+#8 transferring context: 2B done
+#8 DONE 0.0s
+
+#9 [golang builder 1/7] FROM docker.io/library/golang:1.21-alpine@sha256:2414035b086e3c42b99654c8b26e6f5b1b1598080d65fd03c7f499552ff4dc94
+#9 resolve docker.io/library/golang:1.21-alpine@sha256:2414035b086e3c42b99654c8b26e6f5b1b1598080d65fd03c7f499552ff4dc94 done
+#9 DONE 0.0s
+
+#10 [golang stage-1 1/4] FROM docker.io/library/alpine:latest@sha256:25109184c71bdad752c8312a8623239686a9a2071e8825f20acb8f2198c3f659
+#10 resolve docker.io/library/alpine:latest@sha256:25109184c71bdad752c8312a8623239686a9a2071e8825f20acb8f2198c3f659 done
+#10 DONE 0.0s
+
+#11 [golang internal] load build context
+#11 transferring context: 110B done
+#11 DONE 0.0s
+
+#12 [golang builder 4/7] COPY go.mod go.sum ./
+#12 CACHED
+
+#13 [golang builder 3/7] WORKDIR /app
+#13 CACHED
+
+#14 [golang builder 6/7] COPY . .
+#14 CACHED
+
+#15 [golang stage-1 3/4] COPY --from=builder /app/hungarian-benchmark .
+#15 CACHED
+
+#16 [golang stage-1 2/4] WORKDIR /app
+#16 CACHED
+
+#17 [golang builder 2/7] RUN apk add --no-cache git
+#17 CACHED
+
+#18 [golang builder 7/7] RUN go build -o hungarian-benchmark .
+#18 CACHED
+
+#19 [golang builder 5/7] RUN go mod download
+#19 CACHED
+
+#20 [golang stage-1 4/4] RUN mkdir -p /results
+#20 CACHED
+
+#21 [golang] exporting to image
+#21 exporting layers done
+#21 exporting manifest sha256:3519532ae9b5bc752464f92c9a4de70559952d457b5de323a49c583b60e634a2 done
+#21 exporting config sha256:651f9e8a873368b9b65121d01c10ea2cf5a5a7143870055da9e4a9fb2aa3f530 done
+#21 exporting attestation manifest sha256:cc9d2efaaec8bb493087fafbe13fd001c887007e1a523960521eb67f4a77a5a1 0.0s done
+#21 exporting manifest list sha256:da4f9ed91fe71422dac179d9e0f2d673237a28db13d16772caab0a57e185f7f2 done
+#21 naming to docker.io/library/hungarian-benchmark-golang:latest done
+#21 unpacking to docker.io/library/hungarian-benchmark-golang:latest done
+#21 DONE 0.1s
+
+#22 [golang] resolving provenance for metadata file
+#22 DONE 0.0s
+
+#23 [python internal] load metadata for docker.io/library/python:3.11-slim
+#23 ...
+
+#24 [rust internal] load metadata for docker.io/library/rust:1.82-alpine
+#24 DONE 0.6s
+
+#25 [rust internal] load .dockerignore
+#25 transferring context: 2B done
+#25 DONE 0.0s
+
+#23 [reporter internal] load metadata for docker.io/library/python:3.11-slim
+#23 DONE 0.6s
+
+#26 [reporter internal] load .dockerignore
+#26 transferring context: 2B done
+#26 DONE 0.0s
+
+#27 [python internal] load .dockerignore
+#27 transferring context: 2B done
+#27 DONE 0.0s
+
+#28 [rust builder 1/7] FROM docker.io/library/rust:1.82-alpine@sha256:2f42ce0d00c0b14f7fd84453cdc93ff5efec5da7ce03ead6e0b41adb1fbe834e
+#28 resolve docker.io/library/rust:1.82-alpine@sha256:2f42ce0d00c0b14f7fd84453cdc93ff5efec5da7ce03ead6e0b41adb1fbe834e 0.0s done
+#28 DONE 0.0s
+
+#10 [rust stage-1 1/4] FROM docker.io/library/alpine:latest@sha256:25109184c71bdad752c8312a8623239686a9a2071e8825f20acb8f2198c3f659
+#10 resolve docker.io/library/alpine:latest@sha256:25109184c71bdad752c8312a8623239686a9a2071e8825f20acb8f2198c3f659 0.0s done
+#10 DONE 0.0s
+
+#29 [rust internal] load build context
+#29 transferring context: 86B done
+#29 DONE 0.0s
+
+#30 [rust builder 7/7] RUN cargo build --release
+#30 CACHED
+
+#31 [rust builder 5/7] RUN mkdir src &&     echo "fn main() {}" > src/main.rs &&     cargo build --release || true
+#31 CACHED
+
+#16 [rust stage-1 2/4] WORKDIR /app
+#16 CACHED
+
+#32 [rust stage-1 3/4] COPY --from=builder /app/target/release/hungarian-benchmark .
+#32 CACHED
+
+#33 [rust builder 3/7] RUN apk add --no-cache musl-dev
+#33 CACHED
+
+#34 [rust builder 4/7] COPY Cargo.toml Cargo.lock* ./
+#34 CACHED
+
+#35 [rust builder 6/7] COPY src ./src
+#35 CACHED
+
+#36 [rust builder 2/7] WORKDIR /app
+#36 CACHED
+
+#37 [rust stage-1 4/4] RUN mkdir -p /results
+#37 CACHED
+
+#38 [python 1/8] FROM docker.io/library/python:3.11-slim@sha256:0b23cfb7425d065008b778022a17b1551c82f8b4866ee5a7a200084b7e2eafbf
+#38 resolve docker.io/library/python:3.11-slim@sha256:0b23cfb7425d065008b778022a17b1551c82f8b4866ee5a7a200084b7e2eafbf done
+#38 DONE 0.0s
+
+#39 [reporter internal] load build context
+#39 transferring context: 76B done
+#39 DONE 0.0s
+
+#40 [python internal] load build context
+#40 transferring context: 64B done
+#40 DONE 0.0s
+
+#41 [reporter 7/8] RUN chmod +x *.py
+#41 CACHED
+
+#42 [reporter 5/8] RUN pip install --no-cache-dir -r requirements.txt
+#42 CACHED
+
+#43 [reporter 4/8] COPY requirements.txt .
+#43 CACHED
+
+#44 [reporter 6/8] COPY compare_results.py .
+#44 CACHED
+
+#45 [reporter 8/8] RUN mkdir -p /results
+#45 CACHED
+
+#46 [python 2/8] WORKDIR /app
+#46 CACHED
+
+#47 [python 4/8] COPY requirements.txt .
+#47 CACHED
+
+#48 [python 6/8] COPY main.py .
+#48 CACHED
+
+#49 [python 7/8] RUN chmod +x main.py
+#49 CACHED
+
+#50 [python 3/8] RUN apt-get update && apt-get install -y gcc python3-dev && rm -rf /var/lib/apt/lists/*
+#50 CACHED
+
+#51 [python 5/8] RUN pip install --no-cache-dir -r requirements.txt
+#51 CACHED
+
+#52 [python 8/8] RUN mkdir -p /results
+#52 CACHED
+
+#53 [rust] exporting to image
+#53 exporting layers done
+#53 exporting manifest sha256:b9cccc1b9430e839687e8875252aa3d7cbe61a58ef03a9128f3a25942b07419d done
+#53 exporting config sha256:35383540d8dd39de7c34157040c48c36a7c0f0e0eeade29de4023ca10cb510f6 done
+#53 exporting attestation manifest sha256:5b476288601c0d87a52b6ee6c8e06c3b34b55b669ea52202d8963bbea593a126 0.0s done
+#53 exporting manifest list sha256:560d1b0a4ec7ed79b4db0ee091c4dd1c964c18043856149db2e5c50528b19e33 done
+#53 naming to docker.io/library/hungarian-benchmark-rust:latest done
+#53 unpacking to docker.io/library/hungarian-benchmark-rust:latest done
+#53 DONE 0.0s
+
+#54 [reporter] exporting to image
+#54 exporting layers done
+#54 exporting manifest sha256:ddda3ecc7a4795175403ceed0b2f7c3926d561c3daeafc644996ba680969ba75 done
+#54 exporting config sha256:94fb26c586392510f40b146e0c61f63ea2e4a12144dc44be094ede3adfaaf52c done
+#54 exporting attestation manifest sha256:33318d9beee2a157cc14ef2996ceffd81e323827eb62dd831bbf1cfba52e98d3 0.0s done
+#54 exporting manifest list sha256:626b954e0e02db5c2634584786a5745134b23c9014faa95c0b69a66ccac6501d 0.0s done
+#54 naming to docker.io/library/hungarian-benchmark-reporter:latest done
+#54 unpacking to docker.io/library/hungarian-benchmark-reporter:latest
+#54 unpacking to docker.io/library/hungarian-benchmark-reporter:latest done
+#54 DONE 0.1s
+
+#55 [python] exporting to image
+#55 exporting layers done
+#55 exporting manifest sha256:8fc06ca73fbcdd9d938494206300b20f9cb933d777c1e479358a524e17b58e4a done
+#55 exporting config sha256:d2b55164d7000ce5bef947c5e33a18632bad50f0c23498ce28a724b722be4e70 done
+#55 exporting attestation manifest sha256:d9a221d18c8454fa33829d3608fd9768cf12f4a0f9169c7abee7bc40701cc723 0.0s done
+#55 exporting manifest list sha256:16f23c79019dda300869f6d6b3f38a64423d9883d5a534969a3074ca188cecf2 0.0s done
+#55 naming to docker.io/library/hungarian-benchmark-python:latest done
+#55 unpacking to docker.io/library/hungarian-benchmark-python:latest done
+#55 DONE 0.1s
+
+#56 [rust] resolving provenance for metadata file
+#56 DONE 0.0s
+
+#57 [reporter] resolving provenance for metadata file
+#57 DONE 0.0s
+
+#58 [python] resolving provenance for metadata file
+#58 DONE 0.0s
+ Image hungarian-benchmark-golang Built 
+ Image hungarian-benchmark-python Built 
+ Image hungarian-benchmark-reporter Built 
+ Image hungarian-benchmark-rust Built 
+
+🐍 Running Python (scipy) benchmarks...
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Running small (10×20) - SEQUENTIAL (1 core)
+time="2026-02-08T11:04:39+05:30" level=warning msg="/Users/ankur.a/g_orange/hungarian-benchmark/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+ Network hungarian-benchmark_benchmark-net Creating 
+ Network hungarian-benchmark_benchmark-net Created 
+time="2026-02-08T11:04:39+05:30" level=warning msg="Found orphan containers ([hungarian-generator]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container hungarian-benchmark-python-run-bebc73c4e84a Creating 
+ Container hungarian-benchmark-python-run-bebc73c4e84a Created 
+Running Python Hungarian Algorithm Benchmark (SEQUENTIAL)
+Scenario: small
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Matrix: 10×20 | Cores: 1
+
+Matrix shape: (10, 20)
+Matrix dtype: float64
+Load time (sequential): 9.472 ms
+
+✓ Algorithm completed successfully
+  Assignments: 10
+  Total cost: 9044.94
+  Load time: 9.472 ms
+  Algorithm time: 0.011 ms
+  Total time: 9.483 ms
+  Memory used: 0.00 MB
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+BENCHMARK SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Language:        Python
+Implementation:  scipy.optimize.linear_sum_assignment (sequential)
+Scenario:        small
+Matrix Size:     10x20
+Execution Time:  0.011 ms
+Memory Used:     0.00 MB
+Solution Cost:   9044.94
+Success:         ✓
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Running small (10×20) - PARALLEL (8 cores)
+time="2026-02-08T11:04:41+05:30" level=warning msg="/Users/ankur.a/g_orange/hungarian-benchmark/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+time="2026-02-08T11:04:41+05:30" level=warning msg="Found orphan containers ([hungarian-generator]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container hungarian-benchmark-python-run-32f913cfb624 Creating 
+ Container hungarian-benchmark-python-run-32f913cfb624 Created 
+Running Python Hungarian Algorithm Benchmark (PARALLEL)
+Scenario: small
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Matrix: 10×20 | Cores: 8
+
+Matrix shape: (10, 20)
+Matrix dtype: float64
+Load time (parallel): 38.440 ms
+
+✓ Algorithm completed successfully
+  Assignments: 10
+  Total cost: 9044.94
+  Load time: 38.440 ms
+  Algorithm time: 0.018 ms
+  Total time: 38.459 ms
+  Memory used: 2.07 MB
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+BENCHMARK SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Language:        Python
+Implementation:  scipy.optimize.linear_sum_assignment (parallel)
+Scenario:        small
+Matrix Size:     10x20
+Execution Time:  0.018 ms
+Memory Used:     2.07 MB
+Solution Cost:   9044.94
+Success:         ✓
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Running medium (50×100) - SEQUENTIAL (1 core)
+time="2026-02-08T11:04:42+05:30" level=warning msg="/Users/ankur.a/g_orange/hungarian-benchmark/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+time="2026-02-08T11:04:42+05:30" level=warning msg="Found orphan containers ([hungarian-generator]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container hungarian-benchmark-python-run-3f99b39a5abc Creating 
+ Container hungarian-benchmark-python-run-3f99b39a5abc Created 
+Running Python Hungarian Algorithm Benchmark (SEQUENTIAL)
+Scenario: medium
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Matrix: 50×100 | Cores: 1
+
+Matrix shape: (50, 100)
+Matrix dtype: float64
+Load time (sequential): 211.943 ms
+
+✓ Algorithm completed successfully
+  Assignments: 50
+  Total cost: 29229.05
+  Load time: 211.943 ms
+  Algorithm time: 0.050 ms
+  Total time: 211.993 ms
+  Memory used: 0.11 MB
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+BENCHMARK SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Language:        Python
+Implementation:  scipy.optimize.linear_sum_assignment (sequential)
+Scenario:        medium
+Matrix Size:     50x100
+Execution Time:  0.050 ms
+Memory Used:     0.11 MB
+Solution Cost:   29229.05
+Success:         ✓
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Running medium (50×100) - PARALLEL (8 cores)
+time="2026-02-08T11:04:43+05:30" level=warning msg="/Users/ankur.a/g_orange/hungarian-benchmark/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+time="2026-02-08T11:04:43+05:30" level=warning msg="Found orphan containers ([hungarian-generator]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container hungarian-benchmark-python-run-b6f49ada92a6 Creating 
+ Container hungarian-benchmark-python-run-b6f49ada92a6 Created 
+Running Python Hungarian Algorithm Benchmark (PARALLEL)
+Scenario: medium
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Matrix: 50×100 | Cores: 8
+
+Matrix shape: (50, 100)
+Matrix dtype: float64
+Load time (parallel): 162.837 ms
+
+✓ Algorithm completed successfully
+  Assignments: 50
+  Total cost: 29229.05
+  Load time: 162.837 ms
+  Algorithm time: 0.064 ms
+  Total time: 162.901 ms
+  Memory used: 2.09 MB
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+BENCHMARK SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Language:        Python
+Implementation:  scipy.optimize.linear_sum_assignment (parallel)
+Scenario:        medium
+Matrix Size:     50x100
+Execution Time:  0.064 ms
+Memory Used:     2.09 MB
+Solution Cost:   29229.05
+Success:         ✓
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Running large (100×200) - SEQUENTIAL (1 core)
+time="2026-02-08T11:04:45+05:30" level=warning msg="/Users/ankur.a/g_orange/hungarian-benchmark/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+time="2026-02-08T11:04:45+05:30" level=warning msg="Found orphan containers ([hungarian-generator]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container hungarian-benchmark-python-run-a3f05c7346c2 Creating 
+ Container hungarian-benchmark-python-run-a3f05c7346c2 Created 
+Running Python Hungarian Algorithm Benchmark (SEQUENTIAL)
+Scenario: large
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Matrix: 100×200 | Cores: 1
+
+Matrix shape: (100, 200)
+Matrix dtype: float64
+Load time (sequential): 899.673 ms
+
+✓ Algorithm completed successfully
+  Assignments: 100
+  Total cost: 47402.88
+  Load time: 899.673 ms
+  Algorithm time: 0.152 ms
+  Total time: 899.826 ms
+  Memory used: 0.62 MB
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+BENCHMARK SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Language:        Python
+Implementation:  scipy.optimize.linear_sum_assignment (sequential)
+Scenario:        large
+Matrix Size:     100x200
+Execution Time:  0.152 ms
+Memory Used:     0.62 MB
+Solution Cost:   47402.88
+Success:         ✓
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Running large (100×200) - PARALLEL (8 cores)
+time="2026-02-08T11:04:47+05:30" level=warning msg="/Users/ankur.a/g_orange/hungarian-benchmark/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+time="2026-02-08T11:04:47+05:30" level=warning msg="Found orphan containers ([hungarian-generator]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container hungarian-benchmark-python-run-83019bccbba8 Creating 
+ Container hungarian-benchmark-python-run-83019bccbba8 Created 
+Running Python Hungarian Algorithm Benchmark (PARALLEL)
+Scenario: large
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Matrix: 100×200 | Cores: 8
+
+Matrix shape: (100, 200)
+Matrix dtype: float64
+Load time (parallel): 305.915 ms
+
+✓ Algorithm completed successfully
+  Assignments: 100
+  Total cost: 47402.88
+  Load time: 305.915 ms
+  Algorithm time: 0.181 ms
+  Total time: 306.096 ms
+  Memory used: 2.64 MB
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+BENCHMARK SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Language:        Python
+Implementation:  scipy.optimize.linear_sum_assignment (parallel)
+Scenario:        large
+Matrix Size:     100x200
+Execution Time:  0.181 ms
+Memory Used:     2.64 MB
+Solution Cost:   47402.88
+Success:         ✓
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Running xlarge (250×500) - SEQUENTIAL (1 core)
+time="2026-02-08T11:04:49+05:30" level=warning msg="/Users/ankur.a/g_orange/hungarian-benchmark/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+time="2026-02-08T11:04:49+05:30" level=warning msg="Found orphan containers ([hungarian-generator]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container hungarian-benchmark-python-run-d0893611ea20 Creating 
+ Container hungarian-benchmark-python-run-d0893611ea20 Created 
+Running Python Hungarian Algorithm Benchmark (SEQUENTIAL)
+Scenario: xlarge
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Matrix: 250×500 | Cores: 1
+
+Matrix shape: (250, 500)
+Matrix dtype: float64
+Load time (sequential): 5703.063 ms
+
+✓ Algorithm completed successfully
+  Assignments: 250
+  Total cost: 94264.98
+  Load time: 5703.063 ms
+  Algorithm time: 0.854 ms
+  Total time: 5703.917 ms
+  Memory used: 5.23 MB
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+BENCHMARK SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Language:        Python
+Implementation:  scipy.optimize.linear_sum_assignment (sequential)
+Scenario:        xlarge
+Matrix Size:     250x500
+Execution Time:  0.854 ms
+Memory Used:     5.23 MB
+Solution Cost:   94264.98
+Success:         ✓
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Running xlarge (250×500) - PARALLEL (8 cores)
+time="2026-02-08T11:04:56+05:30" level=warning msg="/Users/ankur.a/g_orange/hungarian-benchmark/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+time="2026-02-08T11:04:56+05:30" level=warning msg="Found orphan containers ([hungarian-generator]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container hungarian-benchmark-python-run-582b1a735cc5 Creating 
+ Container hungarian-benchmark-python-run-582b1a735cc5 Created 
+Running Python Hungarian Algorithm Benchmark (PARALLEL)
+Scenario: xlarge
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Matrix: 250×500 | Cores: 8
+
+Matrix shape: (250, 500)
+Matrix dtype: float64
+Load time (parallel): 1798.934 ms
+
+✓ Algorithm completed successfully
+  Assignments: 250
+  Total cost: 94264.98
+  Load time: 1798.934 ms
+  Algorithm time: 0.845 ms
+  Total time: 1799.779 ms
+  Memory used: 7.75 MB
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+BENCHMARK SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Language:        Python
+Implementation:  scipy.optimize.linear_sum_assignment (parallel)
+Scenario:        xlarge
+Matrix Size:     250x500
+Execution Time:  0.845 ms
+Memory Used:     7.75 MB
+Solution Cost:   94264.98
+Success:         ✓
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Running xxlarge (500×1000) - SEQUENTIAL (1 core)
+time="2026-02-08T11:04:59+05:30" level=warning msg="/Users/ankur.a/g_orange/hungarian-benchmark/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+time="2026-02-08T11:04:59+05:30" level=warning msg="Found orphan containers ([hungarian-generator]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container hungarian-benchmark-python-run-5d98337d818a Creating 
+ Container hungarian-benchmark-python-run-5d98337d818a Created 
+Running Python Hungarian Algorithm Benchmark (SEQUENTIAL)
+Scenario: xxlarge
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Matrix: 500×1000 | Cores: 1
+
+Matrix shape: (500, 1000)
+Matrix dtype: float64
+Load time (sequential): 22180.851 ms
+
+✓ Algorithm completed successfully
+  Assignments: 500
+  Total cost: 155822.44
+  Load time: 22180.851 ms
+  Algorithm time: 3.231 ms
+  Total time: 22184.083 ms
+  Memory used: 22.87 MB
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+BENCHMARK SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Language:        Python
+Implementation:  scipy.optimize.linear_sum_assignment (sequential)
+Scenario:        xxlarge
+Matrix Size:     500x1000
+Execution Time:  3.231 ms
+Memory Used:     22.87 MB
+Solution Cost:   155822.44
+Success:         ✓
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Running xxlarge (500×1000) - PARALLEL (8 cores)
+time="2026-02-08T11:05:22+05:30" level=warning msg="/Users/ankur.a/g_orange/hungarian-benchmark/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+time="2026-02-08T11:05:22+05:30" level=warning msg="Found orphan containers ([hungarian-generator]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container hungarian-benchmark-python-run-015ce87427cc Creating 
+ Container hungarian-benchmark-python-run-015ce87427cc Created 
+Running Python Hungarian Algorithm Benchmark (PARALLEL)
+Scenario: xxlarge
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Matrix: 500×1000 | Cores: 8
+
+Matrix shape: (500, 1000)
+Matrix dtype: float64
+Load time (parallel): 7355.135 ms
+
+✓ Algorithm completed successfully
+  Assignments: 500
+  Total cost: 155822.44
+  Load time: 7355.135 ms
+  Algorithm time: 3.526 ms
+  Total time: 7358.661 ms
+  Memory used: 25.12 MB
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+BENCHMARK SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Language:        Python
+Implementation:  scipy.optimize.linear_sum_assignment (parallel)
+Scenario:        xxlarge
+Matrix Size:     500x1000
+Execution Time:  3.526 ms
+Memory Used:     25.12 MB
+Solution Cost:   155822.44
+Success:         ✓
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ Python results copied to ./results/
+
+🔷 Running Golang benchmarks...
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Running small (10×20) - SEQUENTIAL (1 core)
+time="2026-02-08T11:05:32+05:30" level=warning msg="/Users/ankur.a/g_orange/hungarian-benchmark/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+time="2026-02-08T11:05:32+05:30" level=warning msg="Found orphan containers ([hungarian-generator]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container hungarian-benchmark-golang-run-67435152375c Creating 
+ Container hungarian-benchmark-golang-run-67435152375c Created 
+Running Golang Hungarian Algorithm Benchmark (SEQUENTIAL)
+Scenario: small
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Matrix: 10×20 | Cores: 1
+
+  Running Hungarian on 20x20 matrix
+  Got 20 assignments
+✓ Algorithm completed successfully
+  Assignments: 20
+  Total cost: 9823.71
+  Load time (sequential): 0.590 ms
+  Algorithm time: 0.019 ms
+  Total time: 0.609 ms
+  Memory used: 0 MB
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+BENCHMARK SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Language:        Golang
+Implementation:  hungarian-algorithm (sequential)
+Scenario:        small
+Matrix Size:     10x20
+Execution Time:  0.019 ms
+Memory Used:     0 MB
+Solution Cost:   9823.71
+Success:         true
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Running small (10×20) - PARALLEL (8 cores)
+time="2026-02-08T11:05:34+05:30" level=warning msg="/Users/ankur.a/g_orange/hungarian-benchmark/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+time="2026-02-08T11:05:34+05:30" level=warning msg="Found orphan containers ([hungarian-generator]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container hungarian-benchmark-golang-run-9e620ef89b77 Creating 
+ Container hungarian-benchmark-golang-run-9e620ef89b77 Created 
+Running Golang Hungarian Algorithm Benchmark (PARALLEL)
+Scenario: small
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Matrix: 10×20 | Cores: 8
+
+  Running Hungarian on 20x20 matrix
+  Got 20 assignments
+✓ Algorithm completed successfully
+  Assignments: 20
+  Total cost: 9823.71
+  Load time (parallel): 0.942 ms
+  Algorithm time: 0.033 ms
+  Total time: 0.975 ms
+  Memory used: 0 MB
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+BENCHMARK SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Language:        Golang
+Implementation:  hungarian-algorithm (parallel)
+Scenario:        small
+Matrix Size:     10x20
+Execution Time:  0.033 ms
+Memory Used:     0 MB
+Solution Cost:   9823.71
+Success:         true
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Running medium (50×100) - SEQUENTIAL (1 core)
+time="2026-02-08T11:05:35+05:30" level=warning msg="/Users/ankur.a/g_orange/hungarian-benchmark/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+time="2026-02-08T11:05:35+05:30" level=warning msg="Found orphan containers ([hungarian-generator]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container hungarian-benchmark-golang-run-e185a0cc7fa8 Creating 
+ Container hungarian-benchmark-golang-run-e185a0cc7fa8 Created 
+Running Golang Hungarian Algorithm Benchmark (SEQUENTIAL)
+Scenario: medium
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Matrix: 50×100 | Cores: 1
+
+  Running Hungarian on 100x100 matrix
+  Got 100 assignments
+✓ Algorithm completed successfully
+  Assignments: 100
+  Total cost: 34748.67
+  Load time (sequential): 15.801 ms
+  Algorithm time: 0.215 ms
+  Total time: 16.016 ms
+  Memory used: 1 MB
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+BENCHMARK SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Language:        Golang
+Implementation:  hungarian-algorithm (sequential)
+Scenario:        medium
+Matrix Size:     50x100
+Execution Time:  0.215 ms
+Memory Used:     1 MB
+Solution Cost:   34748.67
+Success:         true
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Running medium (50×100) - PARALLEL (8 cores)
+time="2026-02-08T11:05:37+05:30" level=warning msg="/Users/ankur.a/g_orange/hungarian-benchmark/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+time="2026-02-08T11:05:37+05:30" level=warning msg="Found orphan containers ([hungarian-generator]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container hungarian-benchmark-golang-run-c787fcf5298a Creating 
+ Container hungarian-benchmark-golang-run-c787fcf5298a Created 
+Running Golang Hungarian Algorithm Benchmark (PARALLEL)
+Scenario: medium
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Matrix: 50×100 | Cores: 8
+
+  Running Hungarian on 100x100 matrix
+  Got 100 assignments
+✓ Algorithm completed successfully
+  Assignments: 100
+  Total cost: 34748.67
+  Load time (parallel): 4.740 ms
+  Algorithm time: 0.191 ms
+  Total time: 4.931 ms
+  Memory used: 1 MB
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+BENCHMARK SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Language:        Golang
+Implementation:  hungarian-algorithm (parallel)
+Scenario:        medium
+Matrix Size:     50x100
+Execution Time:  0.191 ms
+Memory Used:     1 MB
+Solution Cost:   34748.67
+Success:         true
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Running large (100×200) - SEQUENTIAL (1 core)
+time="2026-02-08T11:05:38+05:30" level=warning msg="/Users/ankur.a/g_orange/hungarian-benchmark/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+time="2026-02-08T11:05:38+05:30" level=warning msg="Found orphan containers ([hungarian-generator]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container hungarian-benchmark-golang-run-6ff6a51dc2ae Creating 
+ Container hungarian-benchmark-golang-run-6ff6a51dc2ae Created 
+Running Golang Hungarian Algorithm Benchmark (SEQUENTIAL)
+Scenario: large
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Matrix: 100×200 | Cores: 1
+
+  Running Hungarian on 200x200 matrix
+  Got 200 assignments
+✓ Algorithm completed successfully
+  Assignments: 200
+  Total cost: 51220.32
+  Load time (sequential): 51.834 ms
+  Algorithm time: 0.366 ms
+  Total time: 52.200 ms
+  Memory used: 2 MB
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+BENCHMARK SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Language:        Golang
+Implementation:  hungarian-algorithm (sequential)
+Scenario:        large
+Matrix Size:     100x200
+Execution Time:  0.366 ms
+Memory Used:     2 MB
+Solution Cost:   51220.32
+Success:         true
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Running large (100×200) - PARALLEL (8 cores)
+time="2026-02-08T11:05:39+05:30" level=warning msg="/Users/ankur.a/g_orange/hungarian-benchmark/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+time="2026-02-08T11:05:39+05:30" level=warning msg="Found orphan containers ([hungarian-generator]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container hungarian-benchmark-golang-run-f0eac9c9d472 Creating 
+ Container hungarian-benchmark-golang-run-f0eac9c9d472 Created 
+Running Golang Hungarian Algorithm Benchmark (PARALLEL)
+Scenario: large
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Matrix: 100×200 | Cores: 8
+
+  Running Hungarian on 200x200 matrix
+  Got 200 assignments
+✓ Algorithm completed successfully
+  Assignments: 200
+  Total cost: 51220.32
+  Load time (parallel): 14.147 ms
+  Algorithm time: 0.454 ms
+  Total time: 14.601 ms
+  Memory used: 2 MB
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+BENCHMARK SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Language:        Golang
+Implementation:  hungarian-algorithm (parallel)
+Scenario:        large
+Matrix Size:     100x200
+Execution Time:  0.454 ms
+Memory Used:     2 MB
+Solution Cost:   51220.32
+Success:         true
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Running xlarge (250×500) - SEQUENTIAL (1 core)
+time="2026-02-08T11:05:40+05:30" level=warning msg="/Users/ankur.a/g_orange/hungarian-benchmark/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+time="2026-02-08T11:05:40+05:30" level=warning msg="Found orphan containers ([hungarian-generator]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container hungarian-benchmark-golang-run-1da7da0ed2ae Creating 
+ Container hungarian-benchmark-golang-run-1da7da0ed2ae Created 
+Running Golang Hungarian Algorithm Benchmark (SEQUENTIAL)
+Scenario: xlarge
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Matrix: 250×500 | Cores: 1
+
+  Running Hungarian on 500x500 matrix
+  Got 500 assignments
+✓ Algorithm completed successfully
+  Assignments: 500
+  Total cost: 98210.72
+  Load time (sequential): 320.571 ms
+  Algorithm time: 4.828 ms
+  Total time: 325.399 ms
+  Memory used: 6 MB
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+BENCHMARK SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Language:        Golang
+Implementation:  hungarian-algorithm (sequential)
+Scenario:        xlarge
+Matrix Size:     250x500
+Execution Time:  4.828 ms
+Memory Used:     6 MB
+Solution Cost:   98210.72
+Success:         true
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Running xlarge (250×500) - PARALLEL (8 cores)
+time="2026-02-08T11:05:41+05:30" level=warning msg="/Users/ankur.a/g_orange/hungarian-benchmark/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+time="2026-02-08T11:05:41+05:30" level=warning msg="Found orphan containers ([hungarian-generator]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container hungarian-benchmark-golang-run-f4383f658644 Creating 
+ Container hungarian-benchmark-golang-run-f4383f658644 Created 
+Running Golang Hungarian Algorithm Benchmark (PARALLEL)
+Scenario: xlarge
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Matrix: 250×500 | Cores: 8
+
+  Running Hungarian on 500x500 matrix
+  Got 500 assignments
+✓ Algorithm completed successfully
+  Assignments: 500
+  Total cost: 98210.72
+  Load time (parallel): 179.967 ms
+  Algorithm time: 5.378 ms
+  Total time: 185.345 ms
+  Memory used: 6 MB
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+BENCHMARK SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Language:        Golang
+Implementation:  hungarian-algorithm (parallel)
+Scenario:        xlarge
+Matrix Size:     250x500
+Execution Time:  5.378 ms
+Memory Used:     6 MB
+Solution Cost:   98210.72
+Success:         true
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Running xxlarge (500×1000) - SEQUENTIAL (1 core)
+time="2026-02-08T11:05:43+05:30" level=warning msg="/Users/ankur.a/g_orange/hungarian-benchmark/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+time="2026-02-08T11:05:43+05:30" level=warning msg="Found orphan containers ([hungarian-generator]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container hungarian-benchmark-golang-run-12d1bc1c0adb Creating 
+ Container hungarian-benchmark-golang-run-12d1bc1c0adb Created 
+Running Golang Hungarian Algorithm Benchmark (SEQUENTIAL)
+Scenario: xxlarge
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Matrix: 500×1000 | Cores: 1
+
+  Running Hungarian on 1000x1000 matrix
+  Got 1000 assignments
+✓ Algorithm completed successfully
+  Assignments: 1000
+  Total cost: 162452.60
+  Load time (sequential): 1202.764 ms
+  Algorithm time: 27.792 ms
+  Total time: 1230.556 ms
+  Memory used: 13 MB
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+BENCHMARK SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Language:        Golang
+Implementation:  hungarian-algorithm (sequential)
+Scenario:        xxlarge
+Matrix Size:     500x1000
+Execution Time:  27.792 ms
+Memory Used:     13 MB
+Solution Cost:   162452.60
+Success:         true
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Running xxlarge (500×1000) - PARALLEL (8 cores)
+time="2026-02-08T11:05:45+05:30" level=warning msg="/Users/ankur.a/g_orange/hungarian-benchmark/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+time="2026-02-08T11:05:45+05:30" level=warning msg="Found orphan containers ([hungarian-generator]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container hungarian-benchmark-golang-run-ed24ad8f9144 Creating 
+ Container hungarian-benchmark-golang-run-ed24ad8f9144 Created 
+Running Golang Hungarian Algorithm Benchmark (PARALLEL)
+Scenario: xxlarge
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Matrix: 500×1000 | Cores: 8
+
+  Running Hungarian on 1000x1000 matrix
+  Got 1000 assignments
+✓ Algorithm completed successfully
+  Assignments: 1000
+  Total cost: 162452.60
+  Load time (parallel): 490.007 ms
+  Algorithm time: 35.254 ms
+  Total time: 525.261 ms
+  Memory used: 18 MB
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+BENCHMARK SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Language:        Golang
+Implementation:  hungarian-algorithm (parallel)
+Scenario:        xxlarge
+Matrix Size:     500x1000
+Execution Time:  35.254 ms
+Memory Used:     18 MB
+Solution Cost:   162452.60
+Success:         true
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ Golang results copied to ./results/
+
+🦀 Running Rust benchmarks...
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Running small (10×20) - SEQUENTIAL (1 core)
+time="2026-02-08T11:05:47+05:30" level=warning msg="/Users/ankur.a/g_orange/hungarian-benchmark/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+time="2026-02-08T11:05:47+05:30" level=warning msg="Found orphan containers ([hungarian-generator]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container hungarian-benchmark-rust-run-b85019fc21d7 Creating 
+ Container hungarian-benchmark-rust-run-b85019fc21d7 Created 
+Running Rust Hungarian Algorithm Benchmark (SEQUENTIAL)
+Scenario: small
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Matrix: 10×20 | Cores: 1
+
+✓ Algorithm completed successfully
+  Assignments: 10
+  Total cost: 11591.28
+  Load time (sequential): 1.947 ms
+  Algorithm time: 0.012 ms
+  Total time: 1.959 ms
+  Memory used: 0 MB
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+BENCHMARK SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Language:        Rust
+Implementation:  pathfinding::kuhn_munkres (sequential)
+Scenario:        small
+Matrix Size:     10x20
+Execution Time:  0.012 ms
+Memory Used:     0 MB
+Solution Cost:   11591.28
+Success:         ✓
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Running small (10×20) - PARALLEL (8 cores)
+time="2026-02-08T11:05:48+05:30" level=warning msg="/Users/ankur.a/g_orange/hungarian-benchmark/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+time="2026-02-08T11:05:48+05:30" level=warning msg="Found orphan containers ([hungarian-generator]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container hungarian-benchmark-rust-run-5d3657094a50 Creating 
+ Container hungarian-benchmark-rust-run-5d3657094a50 Created 
+Running Rust Hungarian Algorithm Benchmark (PARALLEL)
+Scenario: small
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Matrix: 10×20 | Cores: 8
+
+✓ Algorithm completed successfully
+  Assignments: 10
+  Total cost: 11591.28
+  Load time (parallel): 1.870 ms
+  Algorithm time: 0.118 ms
+  Total time: 1.988 ms
+  Memory used: 0 MB
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+BENCHMARK SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Language:        Rust
+Implementation:  pathfinding::kuhn_munkres (parallel)
+Scenario:        small
+Matrix Size:     10x20
+Execution Time:  0.118 ms
+Memory Used:     0 MB
+Solution Cost:   11591.28
+Success:         ✓
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Running medium (50×100) - SEQUENTIAL (1 core)
+time="2026-02-08T11:05:49+05:30" level=warning msg="/Users/ankur.a/g_orange/hungarian-benchmark/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+time="2026-02-08T11:05:49+05:30" level=warning msg="Found orphan containers ([hungarian-generator]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container hungarian-benchmark-rust-run-e0e674c0c5ae Creating 
+ Container hungarian-benchmark-rust-run-e0e674c0c5ae Created 
+Running Rust Hungarian Algorithm Benchmark (SEQUENTIAL)
+Scenario: medium
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Matrix: 50×100 | Cores: 1
+
+✓ Algorithm completed successfully
+  Assignments: 50
+  Total cost: 29522.13
+  Load time (sequential): 69.732 ms
+  Algorithm time: 0.295 ms
+  Total time: 70.026 ms
+  Memory used: 0 MB
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+BENCHMARK SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Language:        Rust
+Implementation:  pathfinding::kuhn_munkres (sequential)
+Scenario:        medium
+Matrix Size:     50x100
+Execution Time:  0.295 ms
+Memory Used:     0 MB
+Solution Cost:   29522.13
+Success:         ✓
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Running medium (50×100) - PARALLEL (8 cores)
+time="2026-02-08T11:05:51+05:30" level=warning msg="/Users/ankur.a/g_orange/hungarian-benchmark/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+time="2026-02-08T11:05:51+05:30" level=warning msg="Found orphan containers ([hungarian-generator]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container hungarian-benchmark-rust-run-7e60c62a3c60 Creating 
+ Container hungarian-benchmark-rust-run-7e60c62a3c60 Created 
+Running Rust Hungarian Algorithm Benchmark (PARALLEL)
+Scenario: medium
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Matrix: 50×100 | Cores: 8
+
+✓ Algorithm completed successfully
+  Assignments: 50
+  Total cost: 29522.13
+  Load time (parallel): 21.189 ms
+  Algorithm time: 0.044 ms
+  Total time: 21.233 ms
+  Memory used: 0 MB
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+BENCHMARK SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Language:        Rust
+Implementation:  pathfinding::kuhn_munkres (parallel)
+Scenario:        medium
+Matrix Size:     50x100
+Execution Time:  0.044 ms
+Memory Used:     0 MB
+Solution Cost:   29522.13
+Success:         ✓
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Running large (100×200) - SEQUENTIAL (1 core)
+time="2026-02-08T11:05:52+05:30" level=warning msg="/Users/ankur.a/g_orange/hungarian-benchmark/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+time="2026-02-08T11:05:52+05:30" level=warning msg="Found orphan containers ([hungarian-generator]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container hungarian-benchmark-rust-run-29388ee40335 Creating 
+ Container hungarian-benchmark-rust-run-29388ee40335 Created 
+Running Rust Hungarian Algorithm Benchmark (SEQUENTIAL)
+Scenario: large
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Matrix: 100×200 | Cores: 1
+
+✓ Algorithm completed successfully
+  Assignments: 100
+  Total cost: 50162.76
+  Load time (sequential): 183.015 ms
+  Algorithm time: 0.158 ms
+  Total time: 183.173 ms
+  Memory used: 0 MB
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+BENCHMARK SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Language:        Rust
+Implementation:  pathfinding::kuhn_munkres (sequential)
+Scenario:        large
+Matrix Size:     100x200
+Execution Time:  0.158 ms
+Memory Used:     0 MB
+Solution Cost:   50162.76
+Success:         ✓
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Running large (100×200) - PARALLEL (8 cores)
+time="2026-02-08T11:05:53+05:30" level=warning msg="/Users/ankur.a/g_orange/hungarian-benchmark/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+time="2026-02-08T11:05:53+05:30" level=warning msg="Found orphan containers ([hungarian-generator]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container hungarian-benchmark-rust-run-fc244b52b07e Creating 
+ Container hungarian-benchmark-rust-run-fc244b52b07e Created 
+Running Rust Hungarian Algorithm Benchmark (PARALLEL)
+Scenario: large
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Matrix: 100×200 | Cores: 8
+
+✓ Algorithm completed successfully
+  Assignments: 100
+  Total cost: 50162.76
+  Load time (parallel): 46.898 ms
+  Algorithm time: 0.179 ms
+  Total time: 47.077 ms
+  Memory used: 0 MB
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+BENCHMARK SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Language:        Rust
+Implementation:  pathfinding::kuhn_munkres (parallel)
+Scenario:        large
+Matrix Size:     100x200
+Execution Time:  0.179 ms
+Memory Used:     0 MB
+Solution Cost:   50162.76
+Success:         ✓
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Running xlarge (250×500) - SEQUENTIAL (1 core)
+time="2026-02-08T11:05:54+05:30" level=warning msg="/Users/ankur.a/g_orange/hungarian-benchmark/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+time="2026-02-08T11:05:54+05:30" level=warning msg="Found orphan containers ([hungarian-generator]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container hungarian-benchmark-rust-run-6e945cd3bfc0 Creating 
+ Container hungarian-benchmark-rust-run-6e945cd3bfc0 Created 
+Running Rust Hungarian Algorithm Benchmark (SEQUENTIAL)
+Scenario: xlarge
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Matrix: 250×500 | Cores: 1
+
+✓ Algorithm completed successfully
+  Assignments: 250
+  Total cost: 96641.08
+  Load time (sequential): 1095.852 ms
+  Algorithm time: 0.560 ms
+  Total time: 1096.412 ms
+  Memory used: 1 MB
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+BENCHMARK SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Language:        Rust
+Implementation:  pathfinding::kuhn_munkres (sequential)
+Scenario:        xlarge
+Matrix Size:     250x500
+Execution Time:  0.560 ms
+Memory Used:     1 MB
+Solution Cost:   96641.08
+Success:         ✓
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Running xlarge (250×500) - PARALLEL (8 cores)
+time="2026-02-08T11:05:56+05:30" level=warning msg="/Users/ankur.a/g_orange/hungarian-benchmark/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+time="2026-02-08T11:05:56+05:30" level=warning msg="Found orphan containers ([hungarian-generator]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container hungarian-benchmark-rust-run-ee52bb3b6824 Creating 
+ Container hungarian-benchmark-rust-run-ee52bb3b6824 Created 
+Running Rust Hungarian Algorithm Benchmark (PARALLEL)
+Scenario: xlarge
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Matrix: 250×500 | Cores: 8
+
+✓ Algorithm completed successfully
+  Assignments: 250
+  Total cost: 96641.08
+  Load time (parallel): 333.147 ms
+  Algorithm time: 1.187 ms
+  Total time: 334.334 ms
+  Memory used: 2 MB
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+BENCHMARK SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Language:        Rust
+Implementation:  pathfinding::kuhn_munkres (parallel)
+Scenario:        xlarge
+Matrix Size:     250x500
+Execution Time:  1.187 ms
+Memory Used:     2 MB
+Solution Cost:   96641.08
+Success:         ✓
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Running xxlarge (500×1000) - SEQUENTIAL (1 core)
+time="2026-02-08T11:05:58+05:30" level=warning msg="/Users/ankur.a/g_orange/hungarian-benchmark/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+time="2026-02-08T11:05:58+05:30" level=warning msg="Found orphan containers ([hungarian-generator]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container hungarian-benchmark-rust-run-87148a83086b Creating 
+ Container hungarian-benchmark-rust-run-87148a83086b Created 
+Running Rust Hungarian Algorithm Benchmark (SEQUENTIAL)
+Scenario: xxlarge
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Matrix: 500×1000 | Cores: 1
+
+✓ Algorithm completed successfully
+  Assignments: 500
+  Total cost: 160146.59
+  Load time (sequential): 4339.953 ms
+  Algorithm time: 2.274 ms
+  Total time: 4342.227 ms
+  Memory used: 7 MB
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+BENCHMARK SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Language:        Rust
+Implementation:  pathfinding::kuhn_munkres (sequential)
+Scenario:        xxlarge
+Matrix Size:     500x1000
+Execution Time:  2.274 ms
+Memory Used:     7 MB
+Solution Cost:   160146.59
+Success:         ✓
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Running xxlarge (500×1000) - PARALLEL (8 cores)
+time="2026-02-08T11:06:03+05:30" level=warning msg="/Users/ankur.a/g_orange/hungarian-benchmark/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+time="2026-02-08T11:06:03+05:30" level=warning msg="Found orphan containers ([hungarian-generator]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container hungarian-benchmark-rust-run-d3f5d49b45a4 Creating 
+ Container hungarian-benchmark-rust-run-d3f5d49b45a4 Created 
+Running Rust Hungarian Algorithm Benchmark (PARALLEL)
+Scenario: xxlarge
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Matrix: 500×1000 | Cores: 8
+
+✓ Algorithm completed successfully
+  Assignments: 500
+  Total cost: 160146.59
+  Load time (parallel): 1297.228 ms
+  Algorithm time: 2.437 ms
+  Total time: 1299.665 ms
+  Memory used: 7 MB
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+BENCHMARK SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Language:        Rust
+Implementation:  pathfinding::kuhn_munkres (parallel)
+Scenario:        xxlarge
+Matrix Size:     500x1000
+Execution Time:  2.437 ms
+Memory Used:     7 MB
+Solution Cost:   160146.59
+Success:         ✓
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ Rust results copied to ./results/
+
+📊 Generating comparison report...
+time="2026-02-08T11:06:05+05:30" level=warning msg="/Users/ankur.a/g_orange/hungarian-benchmark/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+time="2026-02-08T11:06:05+05:30" level=warning msg="Found orphan containers ([hungarian-generator]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container hungarian-rust Creating 
+ Container hungarian-golang Creating 
+ Container hungarian-python Creating 
+ Container hungarian-golang Created 
+ Container hungarian-rust Created 
+ Container hungarian-python Created 
+ Container hungarian-golang Starting 
+ Container hungarian-python Starting 
+ Container hungarian-rust Starting 
+ Container hungarian-python Started 
+ Container hungarian-rust Started 
+ Container hungarian-golang Started 
+ Container hungarian-benchmark-reporter-run-bd8063ce1784 Creating 
+ Container hungarian-benchmark-reporter-run-bd8063ce1784 Created 
+
+================================================================================
+  HUNGARIAN ALGORITHM BENCHMARK - COMPARISON RESULTS
+================================================================================
+
+Loaded 52 benchmark results
+
+
+====================================================================================================
+  LARGE
+====================================================================================================
+
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+---------+
+| Language   | Implementation                 | Matrix   |   Matrix Gen (ms) |   Algo (ms) |   Total (ms) | Matrix Gen Speedup   | Algo Speedup   |    Cost |
++============+================================+==========+===================+=============+==============+======================+================+=========+
+| Rust       | pathfinding::kuhn_munkres      | 100x200  |           166.5   |       0.114 |      166.614 | 1.84x                | 1.59x          | 48872.3 |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+---------+
+| Python     | scipy.optimize.linear_sum_assi | 100x200  |           899.673 |       0.152 |      899.826 | 0.34x                | 1.19x          | 47402.9 |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+---------+
+| Rust       | pathfinding::kuhn_munkres (seq | 100x200  |           183.015 |       0.158 |      183.173 | 1.67x                | 1.14x          | 50162.8 |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+---------+
+| Rust       | pathfinding::kuhn_munkres (par | 100x200  |            46.898 |       0.179 |       47.077 | ★ 6.52x              | 1.01x          | 50162.8 |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+---------+
+| Python     | scipy.optimize.linear_sum_assi | 100x200  |           305.915 |       0.181 |      306.096 | 1.00x                | 1.00x          | 47402.9 |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+---------+
+| Python     | scipy.optimize.linear_sum_assi | 100x200  |           869.398 |       0.193 |      869.591 | 0.35x                | 0.94x          | 51345   |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+---------+
+| Golang     | hungarian-algorithm (sequentia | 100x200  |            51.834 |       0.366 |       52.2   | ★ 5.90x              | 0.49x          | 51220.3 |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+---------+
+| Golang     | hungarian-algorithm (parallel) | 100x200  |            14.147 |       0.454 |       14.601 | ★ 21.62x             | 0.40x          | 51220.3 |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+---------+
+| Golang     | hungarian-algorithm            | 100x200  |            42.813 |       0.81  |       43.623 | ★ 7.15x              | 0.22x          | 50070.4 |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+---------+
+
+🏆 Fastest Algorithm: Rust (1.59x faster than Python)
+
+====================================================================================================
+  MEDIUM
+====================================================================================================
+
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+---------+
+| Language   | Implementation                 | Matrix   |   Matrix Gen (ms) |   Algo (ms) |   Total (ms) | Matrix Gen Speedup   | Algo Speedup   |    Cost |
++============+================================+==========+===================+=============+==============+======================+================+=========+
+| Rust       | pathfinding::kuhn_munkres (par | 50x100   |            21.189 |       0.044 |       21.233 | ★ 5.55x              | 1.25x          | 29522.1 |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+---------+
+| Python     | scipy.optimize.linear_sum_assi | 50x100   |           211.943 |       0.05  |      211.993 | 0.55x                | 1.10x          | 29229   |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+---------+
+| Python     | scipy.optimize.linear_sum_assi | 50x100   |           117.548 |       0.055 |      117.602 | 1.00x                | 1.00x          | 29229   |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+---------+
+| Rust       | pathfinding::kuhn_munkres      | 50x100   |            43.288 |       0.055 |       43.343 | 2.72x                | 1.00x          | 32685.1 |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+---------+
+| Python     | scipy.optimize.linear_sum_assi | 50x100   |           162.837 |       0.064 |      162.901 | 0.72x                | 0.86x          | 29229   |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+---------+
+| Golang     | hungarian-algorithm (parallel) | 50x100   |             4.74  |       0.191 |        4.931 | ★ 24.80x             | 0.29x          | 34748.7 |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+---------+
+| Golang     | hungarian-algorithm (sequentia | 50x100   |            15.801 |       0.215 |       16.016 | ★ 7.44x              | 0.26x          | 34748.7 |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+---------+
+| Rust       | pathfinding::kuhn_munkres (seq | 50x100   |            69.732 |       0.295 |       70.026 | 1.69x                | 0.19x          | 29522.1 |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+---------+
+| Golang     | hungarian-algorithm (parallel) | 50x100   |             7.67  |       0.516 |        8.186 | ★ 15.33x             | 0.11x          | 34748.7 |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+---------+
+
+🏆 Fastest Algorithm: Rust (1.25x faster than Python)
+
+====================================================================================================
+  SMALL
+====================================================================================================
+
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+----------+
+| Language   | Implementation                 | Matrix   |   Matrix Gen (ms) |   Algo (ms) |   Total (ms) | Matrix Gen Speedup   | Algo Speedup   |     Cost |
++============+================================+==========+===================+=============+==============+======================+================+==========+
+| Rust       | pathfinding::kuhn_munkres      | 10x20    |             1.672 |       0.009 |        1.681 | ★ 5.66x              | 1.25x          | 10484.7  |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+----------+
+| Python     | scipy.optimize.linear_sum_assi | 10x20    |             8.257 |       0.01  |        8.267 | 1.15x                | 1.10x          | 13908.4  |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+----------+
+| Python     | scipy.optimize.linear_sum_assi | 10x20    |             9.472 |       0.011 |        9.483 | 1.00x                | 1.00x          |  9044.94 |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+----------+
+| Rust       | pathfinding::kuhn_munkres (seq | 10x20    |             1.947 |       0.012 |        1.959 | 4.86x                | 0.92x          | 11591.3  |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+----------+
+| Python     | scipy.optimize.linear_sum_assi | 10x20    |            38.44  |       0.018 |       38.459 | 0.25x                | 0.61x          |  9044.94 |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+----------+
+| Golang     | hungarian-algorithm (sequentia | 10x20    |             0.59  |       0.019 |        0.609 | ★ 16.05x             | 0.58x          |  9823.71 |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+----------+
+| Golang     | hungarian-algorithm            | 10x20    |             0.446 |       0.029 |        0.475 | ★ 21.24x             | 0.38x          | 12880.6  |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+----------+
+| Golang     | hungarian-algorithm (parallel) | 10x20    |             0.942 |       0.033 |        0.975 | ★ 10.06x             | 0.33x          |  9823.71 |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+----------+
+| Rust       | pathfinding::kuhn_munkres (par | 10x20    |             1.87  |       0.118 |        1.988 | ★ 5.06x              | 0.09x          | 11591.3  |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+----------+
+
+🏆 Fastest Algorithm: Rust (1.25x faster than Python)
+
+====================================================================================================
+  TEST
+====================================================================================================
+
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+----------+
+| Language   | Implementation                 | Matrix   |   Matrix Gen (ms) |   Algo (ms) |   Total (ms) | Matrix Gen Speedup   | Algo Speedup   |     Cost |
++============+================================+==========+===================+=============+==============+======================+================+==========+
+| Python     | scipy.optimize.linear_sum_assi | 3x5      |            15.042 |       0.006 |       15.048 | 1.00x                | 1.00x          |  4225.92 |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+----------+
+| Python     | scipy.optimize.linear_sum_assi | 10x20    |             8.592 |       0.011 |        8.603 | 1.75x                | 0.55x          |  9044.94 |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+----------+
+| Python     | scipy.optimize.linear_sum_assi | 10x20    |            37.359 |       0.016 |       37.375 | 0.40x                | 0.38x          |  9044.94 |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+----------+
+| Golang     | hungarian-algorithm (parallel) | 50x100   |             6.032 |       0.276 |        6.308 | 2.49x                | 0.02x          | 34748.7  |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+----------+
+
+🏆 Fastest Algorithm: Python 
+
+====================================================================================================
+  TEST2
+====================================================================================================
+
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+---------+
+| Language   | Implementation                 | Matrix   |   Matrix Gen (ms) |   Algo (ms) |   Total (ms) | Matrix Gen Speedup   | Algo Speedup   |    Cost |
++============+================================+==========+===================+=============+==============+======================+================+=========+
+| Rust       | pathfinding::kuhn_munkres      | 100x200  |           150.018 |       0.11  |      150.127 | ★ 6.91x              | 1.60x          | 48872.3 |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+---------+
+| Python     | scipy.optimize.linear_sum_assi | 100x200  |          1036.38  |       0.176 |     1036.56  | 1.00x                | 1.00x          | 51345   |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+---------+
+| Golang     | hungarian-algorithm            | 100x200  |            56.205 |       1.524 |       57.729 | ★ 18.44x             | 0.12x          | 50070.4 |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+---------+
+
+🏆 Fastest Algorithm: Rust (1.60x faster than Python)
+
+====================================================================================================
+  XLARGE
+====================================================================================================
+
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+---------+
+| Language   | Implementation                 | Matrix   |   Matrix Gen (ms) |   Algo (ms) |   Total (ms) | Matrix Gen Speedup   | Algo Speedup   |    Cost |
++============+================================+==========+===================+=============+==============+======================+================+=========+
+| Rust       | pathfinding::kuhn_munkres      | 250x500  |           956.541 |       0.53  |      957.071 | ★ 5.50x              | 1.38x          | 99203.2 |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+---------+
+| Rust       | pathfinding::kuhn_munkres (seq | 250x500  |          1095.85  |       0.56  |     1096.41  | 4.80x                | 1.30x          | 96641.1 |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+---------+
+| Python     | scipy.optimize.linear_sum_assi | 250x500  |          5262.72  |       0.729 |     5263.44  | 1.00x                | 1.00x          | 95338.8 |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+---------+
+| Python     | scipy.optimize.linear_sum_assi | 250x500  |          1798.93  |       0.845 |     1799.78  | 2.93x                | 0.86x          | 94265   |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+---------+
+| Python     | scipy.optimize.linear_sum_assi | 250x500  |          5703.06  |       0.854 |     5703.92  | 0.92x                | 0.85x          | 94265   |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+---------+
+| Rust       | pathfinding::kuhn_munkres (par | 250x500  |           333.147 |       1.187 |      334.334 | ★ 15.80x             | 0.61x          | 96641.1 |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+---------+
+| Golang     | hungarian-algorithm (sequentia | 250x500  |           320.571 |       4.828 |      325.399 | ★ 16.42x             | 0.15x          | 98210.7 |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+---------+
+| Golang     | hungarian-algorithm (parallel) | 250x500  |           179.967 |       5.378 |      185.345 | ★ 29.24x             | 0.14x          | 98210.7 |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+---------+
+| Golang     | hungarian-algorithm            | 250x500  |           260.399 |       6.852 |      267.251 | ★ 20.21x             | 0.11x          | 96687.6 |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+---------+
+
+🏆 Fastest Algorithm: Rust (1.38x faster than Python)
+
+====================================================================================================
+  XXLARGE
+====================================================================================================
+
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+--------+
+| Language   | Implementation                 | Matrix   |   Matrix Gen (ms) |   Algo (ms) |   Total (ms) | Matrix Gen Speedup   | Algo Speedup   |   Cost |
++============+================================+==========+===================+=============+==============+======================+================+========+
+| Rust       | pathfinding::kuhn_munkres      | 500x1000 |          3913.03  |       1.92  |     3914.95  | ★ 5.54x              | 1.69x          | 161135 |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+--------+
+| Rust       | pathfinding::kuhn_munkres (seq | 500x1000 |          4339.95  |       2.274 |     4342.23  | 5.00x                | 1.43x          | 160147 |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+--------+
+| Rust       | pathfinding::kuhn_munkres (par | 500x1000 |          1297.23  |       2.437 |     1299.66  | ★ 16.71x             | 1.33x          | 160147 |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+--------+
+| Python     | scipy.optimize.linear_sum_assi | 500x1000 |         22180.9   |       3.231 |    22184.1   | 0.98x                | 1.00x          | 155822 |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+--------+
+| Python     | scipy.optimize.linear_sum_assi | 500x1000 |         21678.1   |       3.245 |    21681.3   | 1.00x                | 1.00x          | 160484 |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+--------+
+| Python     | scipy.optimize.linear_sum_assi | 500x1000 |          7355.14  |       3.526 |     7358.66  | 2.95x                | 0.92x          | 155822 |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+--------+
+| Golang     | hungarian-algorithm (sequentia | 500x1000 |          1202.76  |      27.792 |     1230.56  | ★ 18.02x             | 0.12x          | 162453 |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+--------+
+| Golang     | hungarian-algorithm (parallel) | 500x1000 |           490.007 |      35.254 |      525.261 | ★ 44.24x             | 0.09x          | 162453 |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+--------+
+| Golang     | hungarian-algorithm            | 500x1000 |          1185.2   |      49.305 |     1234.51  | ★ 18.29x             | 0.07x          | 161989 |
++------------+--------------------------------+----------+-------------------+-------------+--------------+----------------------+----------------+--------+
+
+🏆 Fastest Algorithm: Rust (1.69x faster than Python)
+
+📄 Markdown report saved to: /results/comparison_report.md
+📄 HTML report saved to: /results/comparison_report.html
+📄 Confluence report saved to: /results/comparison_report_confluence.txt
+
+================================================================================
+
+
+📦 Copying final results and report to local folder...
+✅ All results copied to ./results/
+
+✅ Benchmark complete!
+
+📂 Results location:
+   - Local folder: ./results/
+   - Docker volume: results
+
+📄 Available files:
+total 528
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   8.7K Feb  8 11:06 comparison_report_confluence.txt
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users    31K Feb  8 11:06 comparison_report.html
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   8.3K Feb  8 11:06 comparison_report.md
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   294B Feb  8 11:06 golang_large_parallel.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   294B Feb  8 11:06 golang_large_sequential.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   294B Feb  8 11:06 golang_large.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   292B Feb  8 11:06 golang_medium_parallel.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   309B Feb  8 11:06 golang_medium_sequential.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   292B Feb  8 11:06 golang_medium.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   290B Feb  8 11:06 golang_small_parallel.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   291B Feb  8 11:06 golang_small_sequential.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   294B Feb  8 11:06 golang_small.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   291B Feb  8 11:06 golang_test.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   283B Feb  8 11:06 golang_test2.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   308B Feb  8 11:06 golang_xlarge_parallel.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   299B Feb  8 11:06 golang_xlarge_sequential.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   286B Feb  8 11:06 golang_xlarge.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   302B Feb  8 11:06 golang_xxlarge_parallel.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   316B Feb  8 11:06 golang_xxlarge_sequential.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   293B Feb  8 11:06 golang_xxlarge.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   343B Feb  8 11:06 python_large_parallel.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   345B Feb  8 11:06 python_large_sequential.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   318B Feb  8 11:06 python_large.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   342B Feb  8 11:06 python_medium_parallel.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   343B Feb  8 11:06 python_medium_sequential.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   328B Feb  8 11:06 python_medium.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   336B Feb  8 11:06 python_small_parallel.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   336B Feb  8 11:06 python_small_sequential.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   310B Feb  8 11:06 python_small.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   336B Feb  8 11:06 python_test_parallel.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   335B Feb  8 11:06 python_test_sequential.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   307B Feb  8 11:06 python_test.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   320B Feb  8 11:06 python_test2.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   346B Feb  8 11:06 python_xlarge_parallel.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   348B Feb  8 11:06 python_xlarge_sequential.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   321B Feb  8 11:06 python_xlarge.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   350B Feb  8 11:06 python_xxlarge_parallel.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   354B Feb  8 11:06 python_xxlarge_sequential.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   326B Feb  8 11:06 python_xxlarge.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   296B Feb  8 11:06 rust_large_parallel.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   310B Feb  8 11:06 rust_large_sequential.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   296B Feb  8 11:06 rust_large.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   320B Feb  8 11:06 rust_medium_parallel.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   326B Feb  8 11:06 rust_medium_sequential.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   295B Feb  8 11:06 rust_medium.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   315B Feb  8 11:06 rust_small_parallel.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   303B Feb  8 11:06 rust_small_sequential.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   283B Feb  8 11:06 rust_small.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   298B Feb  8 11:06 rust_test2.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   310B Feb  8 11:06 rust_xlarge_parallel.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   321B Feb  8 11:06 rust_xlarge_sequential.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   313B Feb  8 11:06 rust_xlarge.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   315B Feb  8 11:06 rust_xxlarge_parallel.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   317B Feb  8 11:06 rust_xxlarge_sequential.json
+-rw-r--r--  1 ankur.a  GREYORANGE\Domain Users   304B Feb  8 11:06 rust_xxlarge.json
+
+View comparison report:
+   cat results/comparison_report.md
+
