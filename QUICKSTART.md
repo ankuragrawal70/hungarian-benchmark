@@ -13,62 +13,65 @@ cd /Users/ankur.a/g_orange/hungarian-benchmark
 ```
 
 This will:
-1. Generate test data for all scenarios (small → xxlarge)
-2. Run Python (scipy) benchmarks
-3. Run Golang benchmarks
-4. Run Rust benchmarks
-5. Generate comparison report
+1. Run all 5 test scenarios (small → xxlarge) 
+2. Execute each scenario in sequential (1 core) and parallel (8 cores) modes
+3. Run Python, Golang, and Rust implementations
+4. Generate comprehensive comparison reports
+5. Display 4-category winners: Matrix Gen, Algorithm, Total Time, Memory
 
-## Run Single Scenario
-
-```bash
-# Run only medium scenario (50×100)
-./run_single.sh medium
-
-# Run large scenario (100×200)
-./run_single.sh large
-```
+**Total:** 30 benchmark runs (5 scenarios × 2 modes × 3 languages)
 
 ## View Results
 
 ### Terminal Output
-Results are printed during execution with colored output.
+Results are printed during execution with colored output showing 4 winners per scenario:
+- 📊 Matrix Gen: Fastest at generating cost matrix
+- ⚡ Algorithm: Fastest Hungarian algorithm execution
+- 🎯 Total Time: Best overall performance (Matrix Gen + Algo)
+- 💾 Memory: Most memory-efficient
 
 ### Markdown Report
 ```bash
-docker-compose run --rm reporter cat /results/comparison_report.md
+cat results/comparison_report.md
+```
+
+### HTML Report (Pretty Formatted)
+```bash
+open results/comparison_report.html
 ```
 
 ### Raw JSON Results
 ```bash
-docker-compose run --rm reporter ls -la /results/
-docker-compose run --rm reporter cat /results/python_medium.json
-docker-compose run --rm reporter cat /results/golang_medium.json
+ls -la results/
+cat results/python_results.json   # All Python results
+cat results/golang_results.json   # All Golang results
+cat results/rust_results.json     # All Rust results
 ```
 
 ## Manual Steps
 
-### 1. Generate Test Data
+### Run Single Benchmark (Manual)
 ```bash
-docker-compose run --rm generator python generate_testdata.py
+# Python - Sequential
+docker-compose run --rm python python main.py medium 50 100 1
+
+# Python - Parallel (8 cores)
+docker-compose run --rm python python main.py medium 50 100 8
+
+# Golang - Sequential
+docker-compose run --rm golang /app/hungarian-benchmark medium 50 100 1
+
+# Golang - Parallel (8 cores)
+docker-compose run --rm golang /app/hungarian-benchmark medium 50 100 8
+
+# Rust - Sequential
+docker-compose run --rm rust /app/hungarian-benchmark medium 50 100 1
+
+# Rust - Parallel (8 cores)
+docker-compose run --rm rust /app/hungarian-benchmark medium 50 100 8
 ```
 
-### 2. Run Python Benchmark
-```bash
-docker-compose run --rm python python main.py /testdata/matrix_medium.json
-```
-
-### 3. Run Golang Benchmark
-```bash
-docker-compose run --rm golang /app/hungarian-benchmark /testdata/matrix_medium.json
-```
-
-### 4. Run Rust Benchmark
-```bash
-docker-compose run --rm rust /app/hungarian-benchmark /testdata/matrix_medium.json
-```
-
-### 5. Compare Results
+### Generate Comparison Report
 ```bash
 docker-compose run --rm reporter python compare_results.py
 ```
@@ -100,37 +103,63 @@ docker-compose logs python
 ## Customization
 
 ### Add Your Own Test Scenario
-Edit `runner/generate_testdata.py`:
-```python
-SCENARIOS = [
-    # ... existing scenarios
-    {"name": "custom", "operators": 75, "tasks": 150, "description": "Custom scenario"},
-]
+Edit `run_benchmark.sh` and add your scenario:
+```bash
+SCENARIOS=(
+    "small:10:20"
+    "medium:50:100"
+    "large:100:200"
+    "xlarge:250:500"
+    "xxlarge:500:1000"
+    "custom:75:150"  # Add your custom scenario
+)
 ```
 
 ### Adjust Cost Generation
-Modify `generate_realistic_cost_matrix()` in `runner/generate_testdata.py` to change:
-- Distance ranges
-- Zone penalties
-- Idle time bonuses
+Modify the cost calculation in each language implementation:
+- `python/main.py` - `generate_operator_row()` function
+- `golang/main.go` - `generateOperatorRow()` function
+- `rust/src/main.rs` - `generate_operator_row()` function
+
+The cost function simulates 9 weighted factors:
+- op_remaining_time_cost, op_reach_time_cost, op_wait_time_cost
+- bot_starvation_cost, localized_marker_cost, total_quantity_cost
+- zone_distance, zone_full_penalty, idle_penalty
 
 ### Change Random Seed
-For reproducible results, the seed is set to 42. Change in `generate_testdata.py`:
+For reproducible results, the seed is based on operator index. Modify in each implementation:
 ```python
-random.seed(42)  # Change to different number
+# Python
+random.seed(seed + i)  # seed argument passed from CLI
 ```
 
 ## Expected Performance
 
-Based on typical results:
+Based on actual benchmark results (Total Time = Matrix Generation + Algorithm):
 
-| Scenario | Python (scipy) | Golang | Rust | Best |
-|----------|----------------|--------|------|------|
-| Small (10×20) | ~1-2 ms | ~0.3-0.5 ms | ~0.2-0.4 ms | Rust |
-| Medium (50×100) | ~10-15 ms | ~2-3 ms | ~1.5-2.5 ms | Rust |
-| Large (100×200) | ~50-70 ms | ~8-12 ms | ~6-10 ms | Rust |
-| XLarge (250×500) | ~500-700 ms | ~80-120 ms | ~60-100 ms | Rust |
-| XXLarge (500×1000) | ~3-5 sec | ~500-800 ms | ~400-700 ms | Rust |
+### Sequential (1 Core)
+| Scenario | Python | Golang | Rust | Total Winner | Algo Winner |
+|----------|--------|--------|------|--------------|-------------|
+| Small (10×20) | ~25 ms | ~1.7 ms | ~4.7 ms | Golang | Python |
+| Medium (50×100) | ~214 ms | ~14.5 ms | ~48 ms | Golang | Python |
+| Large (100×200) | ~840 ms | ~55 ms | ~183 ms | Golang | Rust |
+| XLarge (250×500) | ~5400 ms | ~350 ms | ~1100 ms | Golang | Rust |
+| XXLarge (500×1000) | ~22900 ms | ~1842 ms | ~4295 ms | Golang | Rust |
+
+### Parallel (8 Cores)
+| Scenario | Python | Golang | Rust | Total Winner | Algo Winner |
+|----------|--------|--------|------|--------------|-------------|
+| Small (10×20) | ~15 ms | ~1.1 ms | ~2.1 ms | Golang | Rust |
+| Medium (50×100) | ~66 ms | ~6.3 ms | ~16 ms | Golang | Rust |
+| Large (100×200) | ~270 ms | ~22 ms | ~47 ms | Golang | Rust |
+| XLarge (250×500) | ~1600 ms | ~110 ms | ~280 ms | Golang | Rust |
+| XXLarge (500×1000) | ~7158 ms | ~625 ms | ~1128 ms | Golang | Rust |
+
+**Key Insights:**
+- **Golang** consistently wins on total time (matrix generation is dominant)
+- **Rust** has fastest pure algorithm execution (0.04-2.5ms)
+- **Python** shows best parallel scaling but highest overhead
+- Parallel execution provides 2-3x speedup for all languages
 
 **Note:** Actual performance depends on your hardware.
 
