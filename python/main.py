@@ -104,15 +104,33 @@ def generate_realistic_cost_matrix(num_operators, num_tasks, num_cores=1, seed=4
     # Create arguments for each operator (with unique seed per operator)
     args = [(i, num_tasks, seed + i) for i in range(num_operators)]
     
+    peak_mem = 0.0
     if num_cores == 1:
         # Sequential execution
         cost_matrix = [generate_operator_row(arg) for arg in args]
     else:
-        # Parallel execution
+        # Parallel execution - capture peak memory during execution
+        process = psutil.Process()
+        mem_before = process.memory_info().rss / (1024 * 1024)
+        
         with Pool(processes=num_cores) as pool:
             cost_matrix = pool.map(generate_operator_row, args)
+            
+            # Measure memory including children DURING execution
+            main_mem = process.memory_info().rss / (1024 * 1024)
+            child_mem = 0.0
+            try:
+                for child in process.children(recursive=True):
+                    try:
+                        child_mem += child.memory_info().rss / (1024 * 1024)
+                    except (psutil.NoSuchProcess, psutil.AccessDenied):
+                        pass
+            except:
+                pass
+            
+            peak_mem = (main_mem - mem_before) + child_mem
     
-    return cost_matrix
+    return cost_matrix, peak_mem
 
 
 def load_test_data(filename):
@@ -142,7 +160,7 @@ def run_benchmark(data):
         # Time matrix generation
         load_start = time.perf_counter()
         num_cores = data.get('num_cores', 1)
-        matrix_data = generate_realistic_cost_matrix(data['operators'], data['tasks'], num_cores=num_cores)
+        matrix_data, parallel_peak_mem = generate_realistic_cost_matrix(data['operators'], data['tasks'], num_cores=num_cores)
         cost_matrix = np.array(matrix_data, dtype=np.float64)
         load_end = time.perf_counter()
         load_time = (load_end - load_start) * 1000  # Convert to milliseconds
@@ -164,6 +182,14 @@ def run_benchmark(data):
         
         # Measure memory after
         mem_after = process.memory_info().rss / (1024 * 1024)  # MB
+        
+        # Calculate total memory used
+        if num_cores > 1 and parallel_peak_mem > 0:
+            # Use peak memory captured during parallel execution
+            total_mem_used = parallel_peak_mem
+        else:
+            # Sequential mode or fallback - just main process delta
+            total_mem_used = mem_after - mem_before
         
         # Calculate solution cost
         solution_cost = cost_matrix[row_indices, col_indices].sum()
